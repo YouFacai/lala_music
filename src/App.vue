@@ -1,30 +1,52 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+    <div class="box">
+        <router-view></router-view>
+        <!--遮罩-->
+        <div id="mmPlayer_bg" class="mmPlayer-bg"></div>
+        <div class="mmPlayer-mask"></div>
+    </div>
 </template>
-
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+export default {
+    setup() {},
+};
+</script>
+<style>
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-#nav {
-  padding: 30px;
+.box{
+    width: 100%;
+    height: 100%;
+}
+/*遮罩*/
+.mmPlayer-mask,
+.mmPlayer-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+.mmPlayer-mask {
+    z-index: -1;
+    background-color:rgba(0, 0, 0, 0.4);
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.mmPlayer-bg {
+    background-image: url("https://img1.baidu.com/it/u=2579940132,1296036844&fm=11&fmt=auto&gp=0.jpg");
+    z-index: -2;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    filter: blur(12px);
+    opacity: 0.7;
+    transition: all 0.8s;
+    transform: scale(1);
 }
 </style>

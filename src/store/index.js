@@ -1,12 +1,11 @@
 import { createStore } from 'vuex'
-
+import {Music} from './Music/index'
+import {Mv} from './Mv/index'
+import {Common} from './common.js'
 export default createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
   modules: {
+    Music,
+    Mv,
+    Common
   }
 })
