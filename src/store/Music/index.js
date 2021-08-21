@@ -13,6 +13,7 @@ export const Music = {
         lyric: [],
         // 已经播放了多少秒
         currentTime: 0,
+        selectRender:[],
     }),
     mutations: {
         // 正在播放的全部歌曲
@@ -61,6 +62,11 @@ export const Music = {
             } else {
                 timer = clearsetInterval(timer)
             }
+        },
+
+        // 存储搜索列表
+        setSelectRender(state,value){
+            state.selectRender=value
         }
     },
     actions: {},

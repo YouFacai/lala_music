@@ -6,7 +6,11 @@
     <menus></menus>
     <!-- 一边路由一边歌曲信息 -->
     <div id="contents" ref="content" class="content" v-if="this.$env == 'pc'">
-      <router-view></router-view>
+      <router-view v-slot="{ Component, route }">
+        <keep-alive exclude="playing">
+          <component :is="Component" :key="route.path" />
+        </keep-alive>
+      </router-view>
       <smallMsg></smallMsg>
     </div>
     <!-- 底部控件 -->
@@ -18,7 +22,14 @@
 </template>
 
 <script>
-import { toRefs, reactive, defineAsyncComponent, watch ,ref, onMounted} from "vue";
+import {
+  toRefs,
+  reactive,
+  defineAsyncComponent,
+  watch,
+  ref,
+  onMounted,
+} from "vue";
 import { useStore } from "vuex";
 export default {
   components: {
@@ -38,30 +49,30 @@ export default {
   },
   setup() {
     let state = reactive({
-      name: "yzl",
+      
     });
-    
-    let store = useStore()
 
-    let content = ref(null)
+    let store = useStore();
+
+    let content = ref(null);
 
     // 歌词高度
     watch(
       () => store.state.Common.tableHeigh,
       (newdata) => {
-        content.value.style.height = newdata + 'px'
+        content.value.style.height = newdata + "px";
       }
     );
-    onMounted(()=>{
-       if(typeof contents !='undefined'){
-           contents.style.height = store.state.Common.tableHeigh + 'px' 
-       }
-    })
+    onMounted(() => {
+      if (typeof contents != "undefined") {
+        contents.style.height = store.state.Common.tableHeigh + "px";
+      }
+    });
     return {
       ...toRefs(state),
-      content
+      content,
     };
-  }
+  },
 };
 </script>
 

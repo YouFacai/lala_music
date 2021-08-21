@@ -17,9 +17,9 @@ export const secondTO = function (time) {
 export const screenZoom = function (store) {
     const calculateSize = function (e) {
         // 路由高度
-        store.commit("Common/updatetableHeigh",e.currentTarget.innerHeight - 200)
+        store.commit("Common/updatetableHeigh", e.currentTarget.innerHeight - 200)
         // 歌词高度
-        store.commit("Common/updatelyricHeigh",e.currentTarget.innerHeight - 395);
+        store.commit("Common/updatelyricHeigh", e.currentTarget.innerHeight - 395);
     }
     window.addEventListener('DOMContentLoaded', calculateSize)
     window.addEventListener('resize', calculateSize)
@@ -58,3 +58,30 @@ export const PS = function (musicMsg) {
             .classList.add("icon-zanting");
     };
 };
+
+// 防抖
+export const debounce = function debounce(fn, interval, direction) {
+    //定时器初始化为null	之后有没有设置定时器就看 timer是不是null
+    let timer = null;
+    //参数类型错误判断
+    if (typeof fn !== 'function') throw new TypeError(`fn is not function!!!`);
+    if (typeof interval === 'boolean') direction = interval;
+    if (typeof direction !== 'boolean') direction = false;
+    if (typeof interval !== 'number') interval = 500;
+    return function execute(...args) {
+        //头输出标记
+        let ishead = direction === true && timer === null;
+        timer = clearsetInterval(timer);
+        timer = setTimeout(() => {
+            //时间到了一定要清除定时器
+            timer = clearsetInterval(timer);
+            //然后判断是否要输出
+            if (!direction) {
+                fn.call(this, ...args);
+                //如果direction 是true 这里不清理定时器头输出就只能用一次 因为timer！=null
+            };
+        }, interval)
+        //头输出
+        if (ishead) fn();
+    }
+}

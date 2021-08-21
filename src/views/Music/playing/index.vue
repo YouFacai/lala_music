@@ -18,7 +18,7 @@
         class-name="tableName"
         prop="name"
         label="歌曲"
-        width="330"
+        width="430"
       >
       </el-table-column>
       <el-table-column prop="singerss" label="歌手" width="180">
@@ -32,28 +32,22 @@
 <script>
 import { toRefs, reactive, onMounted } from "vue";
 import { useStore, mapState } from "vuex";
+import { useRouter } from "vue-router";
 import { playingData } from "@/api/index.js";
-import {PS} from '@/utils/index.js'
+import { PS } from "@/utils/index.js";
 
 export default {
+  name: "playing",
   components: {},
   setup() {
     let store = useStore();
-
+    let router = useRouter();
     let state = reactive({
       renderList: [],
     });
 
     onMounted(() => {
       playingData().then((res) => {
-        res.forEach((item, index) => {
-          item.singerss = "";
-          item.index = index;
-          item.ar.forEach((item2) => {
-            item.singerss += item2.name + "/";
-          });
-          item.singerss = item.singerss.slice(0, item.singerss.length - 1);
-        });
         state.renderList = res;
       });
     });
@@ -64,10 +58,16 @@ export default {
       newDIV.className = "iconTemp";
       newDIV.id = "kk";
       newDIV.style.display = "inline";
-      newDIV.innerHTML += `
+      if (row.mv) {
+        newDIV.innerHTML += `
                 <span id='music' class='iconfont icon-bofang'></span>
                 <span id='mv' class='iconfont icon-file-mv-fill'></span>
             `;
+      } else {
+        newDIV.innerHTML += `
+                <span id='music' class='iconfont icon-bofang'></span>
+            `;
+      }
       document
         .getElementsByClassName("tableName")
         [row.index + 1].getElementsByClassName("cell")[0]
@@ -75,7 +75,7 @@ export default {
 
       // 手动挂载事件
       music.onclick = PS(row);
-      mv.onclick = PM(row);
+      if (row.mv) mv.onclick = PM(row);
     };
 
     // hoverList 鼠标滑出
@@ -89,7 +89,15 @@ export default {
     // 播放MV
     const PM = function (musicMv) {
       return function () {
-        console.log("PM", musicMv);
+        hoverleave();
+         // 音乐暂停
+        playBtn_PS.classList.remove("icon-zanting");
+        playBtn_PS.classList.add("icon-bofang");
+        store.commit("Music/updatecurrentTime", { type: false, value: null });
+        coreAudio.pause();
+
+        store.commit("Mv/updateCurrentID", musicMv.mv);
+        router.replace("/mv");
       };
     };
 

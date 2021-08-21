@@ -11,8 +11,16 @@ export const playingData = function () {
     let i = 1;
     return instance.get("/api/recommend/songs").then((res) => {
         res.data.dailySongs.index = i++;
+        res.data.dailySongs.forEach((item, index) => {
+            item.singerss = "";
+            item.index = index;
+            item.ar.forEach((item2) => {
+                item.singerss += item2.name + "/";
+            });
+            item.singerss = item.singerss.slice(0, item.singerss.length - 1);
+        });
         // 存一份到vuex 
-        store.commit("Music/setallMusic",res.data.dailySongs);
+        store.commit("Music/setallMusic", res.data.dailySongs);
         return res.data.dailySongs
     })
 }
@@ -28,9 +36,41 @@ export const getLyric = function (id) {
                 second: minute,
                 content,
                 // 一共多少秒
-                time:60 * hour + Number(minute)
+                time: 60 * hour + Number(minute)
             })
         })
         return lyricArr
+    })
+}
+
+// 热搜列表
+export const gethotSelect = function () {
+    return instance.get('/api/search/hot/detail').then((res) => {
+        return res.data.slice(0, 5)
+    })
+}
+
+// 搜索歌曲
+export const getMusic = function (msg) {
+    return instance.get(`/api/cloudsearch?keywords=${msg}`).then((res) => {
+        if (res.result) {
+            res.result.songs.forEach((item, index) => {
+                item.index = index;
+                item.singerss = "";
+                item.ar.forEach((item2) => {
+                    item.singerss += item2.name + "/";
+                });
+                item.singerss = item.singerss.slice(0, item.singerss.length - 1);
+            })
+            return res.result.songs
+        }
+        return []
+    })
+}
+
+// 获得Mv url 
+export const getMvUrl = function (msg) {
+    return instance.get(`api/mv/url?id=${msg}&r=1080`).then(res=>{
+        return res.data
     })
 }
