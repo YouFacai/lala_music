@@ -1,21 +1,21 @@
 <template>
   <div class="menus">
-    <el-button v-for="(item) in renderMenus" :key="item.to" class="elbutton" >
-        <router-link
-          :to="item.to"
-          :custom="true"
-          v-slot="{ href, navigate, isActive }"
+    <el-button v-for="item in renderMenus" :key="item.to" class="elbutton">
+      <router-link
+        :to="item.to"
+        :custom="true"
+        v-slot="{ href, navigate, isActive }"
+      >
+        <div
+          :class="isActive == true ? 'router-link-active' : ''"
+          :active="true"
+          :href="href"
+          @click="navigate"
         >
-          <div
-            :class="isActive==true?'router-link-active':''"
-            :active="true"
-            :href="href"
-            @click="navigate"
-          >
-            {{ item.content }}
-          </div>
-        </router-link>
-      </el-button>
+          {{ item.content }}
+        </div>
+      </router-link>
+    </el-button>
   </div>
 </template>
 
@@ -29,6 +29,10 @@ export default {
         {
           to: "/playing",
           content: "正在播放",
+        },
+        {
+          to: "/recommend",
+          content: "推荐",
         },
         {
           to: "/select",

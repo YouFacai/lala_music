@@ -43,7 +43,7 @@
         <div class="control_btn">
           <span class="iconfont icon-shunxubofang"></span>
         </div>
-        <div class="control_btn">
+        <div class="control_btn" @click="pushDiscuss">
           <span class="iconfont icon-pinglun"></span>
         </div>
         <div class="control_btn">
@@ -62,12 +62,14 @@
 import "./common.less";
 import { reactive, toRefs, ref, watch } from "vue";
 import { useStore, mapState } from "vuex";
-import { secondTO } from "@/utils/index.js";
+import { useRouter } from "vue-router";
+import { secondTO ,isEmptyObject} from "@/utils/index.js";
 import { PS } from "@/utils/index.js";
 export default {
   setup() {
     let state = reactive({});
     let store = useStore();
+    let router = useRouter();
     let psDOM = ref(null);
     // 圆的dom
     let progress_circle = ref(null);
@@ -75,7 +77,6 @@ export default {
     let progress_clone = ref(null);
     // 声音的球
     let progress_circleVoice = ref(null);
-
     let allMusic = store.state.Music.allMusic;
 
     // 上一首
@@ -119,6 +120,9 @@ export default {
         let percent = (count / allTime) * 100;
         progress_circle.value.style.left = percent + "%";
         progress_clone.value.style.width = percent + "%";
+
+        // 判断是否播放结束
+        if (coreAudio.ended) nextMusic();
       }
     );
 
@@ -126,6 +130,13 @@ export default {
     const adjustVoice = function (e) {
       progress_circleVoice.value.style.left = e.layerX + "px";
       coreAudio.volume = (e.layerX / e.target.clientWidth).toFixed(1);
+    };
+
+    // 跳转到评论区
+    const pushDiscuss = function () {
+      if (!isEmptyObject(store.state.Music.MusicMsg)) {
+        router.push("/discuss");
+      }
     };
 
     // 播放 / 暂停
@@ -139,6 +150,7 @@ export default {
       progress_circleVoice,
       preMusic,
       nextMusic,
+      pushDiscuss,
     };
   },
   computed: mapState({

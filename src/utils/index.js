@@ -85,3 +85,29 @@ export const debounce = function debounce(fn, interval, direction) {
         if (ishead) fn();
     }
 }
+
+// 判断是否是空对象
+export const isEmptyObject = function isEmptyObject(obj) {
+    var keys = Object.keys(obj);
+    if (typeof Symbol !== "undefined") keys = keys.concat(Object.getOwnPropertySymbols(obj));
+    return keys.length === 0;
+};
+
+// 时间戳转换时间
+// 时间戳变时间
+export let convertTime = (timestamp) => {
+    let date = new Date(Number(timestamp));
+    let y = date.getFullYear(); // 年
+    let MM = date.getMonth() + 1; // 月
+    MM = MM < 10 ? ('0' + MM) : MM;
+    let d = date.getDate(); // 日
+    d = d < 10 ? ('0' + d) : d;
+    let h = date.getHours(); // 时
+    h = h < 10 ? ('0' + h) : h;
+    let m = date.getMinutes(); // 分
+    m = m < 10 ? ('0' + m) : m;
+    let s = date.getSeconds(); // 秒
+    s = s < 10 ? ('0' + s) : s;
+    let cao = y + '-' + MM + '-' + d + ' ' + h + ':' + m;
+    return cao
+}

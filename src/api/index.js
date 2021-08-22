@@ -74,3 +74,25 @@ export const getMvUrl = function (msg) {
         return res.data
     })
 }
+
+// 获得歌曲评论
+export const getMusicDiscuss = function (id){
+    console.log(id)
+    return instance.get(`api/comment/new?type=0&id=${id}`).then(res=>{
+        return res.data.comments
+    })
+}
+
+// 获得榜单
+export const getHotlist = function(){
+    return instance.get(`/api/toplist`).then(res=>{
+        return res
+    })
+}
+
+// 获取热门歌单
+export const getHotsongList = function (){
+    return instance.get(`/api/top/playlist/highquality?before=1503639064232&limit=100`).then(res=>{
+        return res.playlists
+    })
+}

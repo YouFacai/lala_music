@@ -39,7 +39,7 @@ export default {
 }
 
 .mmPlayer-bg {
-    background-image: url("https://img1.baidu.com/it/u=2579940132,1296036844&fm=11&fmt=auto&gp=0.jpg");
+    background-image: url("https://p4.music.126.net/ACPwGpJZxmGKnM3rWilemA==/109951163083048605.jpg?param=300y300");
     z-index: -2;
     background-repeat: no-repeat;
     background-size: cover;

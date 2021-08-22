@@ -4,7 +4,7 @@ const routes = [
   {
     path: '/',
     name: 'music',
-    redirect: '/playing',
+    redirect: '/recommend',
     component: () => import('../views/Music/index.vue'),
     children: [{
       // 正在播放
@@ -20,6 +20,14 @@ const routes = [
       path: 'mv',
       name: 'mv',
       component: () => import('../views/Music/Mv/index.vue')
+    },{
+      path: 'discuss',
+      name: 'discuss',
+      component: () => import('../views/Music/Discuss/index.vue')
+    },{
+      path: 'recommend',
+      name: 'recommend',
+      component: () => import('../views/Music/Recommend/index.vue')
     }]
   }
 
