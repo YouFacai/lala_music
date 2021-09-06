@@ -21,8 +21,9 @@
       <!-- 进度条 -->
       <div class="MusicMSG">
         <div class="MusicMSG_top">
-          <div class="MusicMSG_top_name">
-            {{ MusicMsg.name || "暂无歌曲" }}
+          <div  class="MusicMSG_top_name">
+            <!-- 虽然废除了但是还是生效 -->
+            <marquee direction='right' scrolldelay='90' width='150px'>{{ MusicMsg.name || "暂无歌曲" }}</marquee>
           </div>
           <div class="MusicMSG_top_time">
             {{ currentTime }}/{{

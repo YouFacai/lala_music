@@ -96,3 +96,19 @@ export const getHotsongList = function (){
         return res.playlists
     })
 }
+
+// 获得歌单的详细
+export const getListDetail = function (id){
+    return instance.get(`/api/playlist/detail?id=${id}`).then(res=>{
+        res.playlist.tracks.forEach((item, index) => {
+            item.singerss = "";
+            item.index = index;
+            item.ar.forEach((item2) => {
+                item.singerss += item2.name + "/";
+            });
+            item.singerss = item.singerss.slice(0, item.singerss.length - 1);
+        });
+        console.log(res.playlist.tracks)
+        return res.playlist.tracks
+    })
+}

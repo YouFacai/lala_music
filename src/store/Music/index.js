@@ -14,6 +14,10 @@ export const Music = {
         // 已经播放了多少秒
         currentTime: 0,
         selectRender:[],
+        // 当前选中的歌单Id
+        selectListID:null,
+        // 是否显示细节
+        isData:false
     }),
     mutations: {
         // 正在播放的全部歌曲
@@ -67,6 +71,16 @@ export const Music = {
         // 存储搜索列表
         setSelectRender(state,value){
             state.selectRender=value
+        },
+
+        // 当前选中的歌单ID
+        setSelectListID(state,value){
+            state.selectListID=value
+        },
+
+        //  是否显示细节
+        setisData(state,value){
+            state.isData=value
         }
     },
     actions: {},

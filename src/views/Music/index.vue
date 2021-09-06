@@ -14,7 +14,7 @@
       <smallMsg></smallMsg>
     </div>
     <!-- 底部控件 -->
-    <bottomBarPC v-if="this.$env == 'pc'"></bottomBarPC>
+    <bottomBarPC  v-if="this.$env == 'pc'"></bottomBarPC>
     <bottomBarPhone v-else></bottomBarPhone>
 
     <audio id="coreAudio" autoplay src=""></audio>
@@ -31,6 +31,7 @@ import {
   onMounted,
 } from "vue";
 import { useStore } from "vuex";
+import {useRouter} from 'vue-router';
 export default {
   components: {
     topbar: defineAsyncComponent(() => import("@/components/topbar/index.vue")),
@@ -56,6 +57,9 @@ export default {
 
     let content = ref(null);
 
+   const router = useRouter();
+
+
     // 歌词高度
     watch(
       () => store.state.Common.tableHeigh,
@@ -68,9 +72,10 @@ export default {
         contents.style.height = store.state.Common.tableHeigh + "px";
       }
     });
+
     return {
       ...toRefs(state),
-      content,
+      content
     };
   },
 };

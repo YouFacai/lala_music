@@ -12,7 +12,9 @@
           :href="href"
           @click="navigate"
         >
-          {{ item.content }}
+          <div @click="selectMenus(item.to)">
+            {{ item.content }}
+          </div>
         </div>
       </router-link>
     </el-button>
@@ -21,6 +23,7 @@
 
 <script>
 import { reactive, toRefs } from "vue";
+import {useStore} from 'vuex';
 export default {
   setup() {
     let state = reactive({
@@ -46,8 +49,18 @@ export default {
       // 当前焦点
       activeIndx: 0,
     });
+
+    const store = useStore()
+
+    const selectMenus = function (to) {
+      if(to === '/recommend'){
+        store.commit('Music/setisData',false)
+      }
+    };
+
     return {
       ...toRefs(state),
+      selectMenus,
     };
   },
 };

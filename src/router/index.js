@@ -20,17 +20,16 @@ const routes = [
       path: 'mv',
       name: 'mv',
       component: () => import('../views/Music/Mv/index.vue')
-    },{
+    }, {
       path: 'discuss',
       name: 'discuss',
       component: () => import('../views/Music/Discuss/index.vue')
-    },{
+    }, {
       path: 'recommend',
       name: 'recommend',
-      component: () => import('../views/Music/Recommend/index.vue')
-    }]
+      component: () => import('../views/Music/Recommend/index.vue'),
+    }],
   }
-
 ]
 
 const router = createRouter({
@@ -39,3 +38,7 @@ const router = createRouter({
 })
 
 export default router
+
+
+
+
