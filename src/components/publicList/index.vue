@@ -2,11 +2,13 @@
   <div class="selectMusic">
     <div class="renderbox">
       <el-table
-        class="playing_L"
+        id="renderbox_box"
+        class="playing_L custom-loading-svg"
         :data="renderList"
         :height="tableHeigh - 55"
         :border="true"
         style="width: 100%"
+        empty-text=" "
         @cell-mouse-enter="hoverenter"
         @cell-mouse-leave="hoverleave"
       >
@@ -32,7 +34,7 @@
 </template>
 
 <script>
-import { toRefs, reactive, defineAsyncComponent, watch, onActivated, onMounted } from "vue";
+import { toRefs, reactive, watch, onMounted } from "vue";
 import { useStore, mapState } from "vuex";
 import { getListDetail } from "@/api/index.js";
 import { useRouter } from "vue-router";
@@ -42,14 +44,14 @@ export default {
     let store = useStore();
     let router = useRouter();
     let state = reactive({
-      renderList: [],
+      renderList: []
     });
 
     onMounted(() => {
-       getListDetail(store.state.Music.selectListID).then(res=>{
-         state.renderList = res;
-       })
-    })
+      getListDetail(store.state.Music.selectListID,document.getElementById("renderbox_box")).then((res) => {
+        state.renderList = res;
+      });
+    });
 
     // hoverList 鼠标滑入
     const hoverenter = function (row, column, cell, event) {
@@ -124,7 +126,7 @@ export default {
 .selectMusic {
   width: 100%;
   color: white;
-  
+
   .renderbox {
     width: 100%;
 
@@ -152,4 +154,5 @@ export default {
   border-radius: 2px;
   background: rgba(0, 0, 0, 0.4);
 }
+
 </style>

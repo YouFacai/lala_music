@@ -3,11 +3,13 @@
     <SelectInput></SelectInput>
     <div class="renderbox">
       <el-table
+      id="selectMusic_box"
         class="playing_L"
         :data="renderList"
         :height="tableHeigh - 80"
         :border="true"
         style="width: 100%"
+        empty-text=" "
         @cell-mouse-enter="hoverenter"
         @cell-mouse-leave="hoverleave"
       >

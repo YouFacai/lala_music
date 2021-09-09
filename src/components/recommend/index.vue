@@ -1,6 +1,6 @@
 <template>
   <div >
-    <div class="artistToplist_box">
+    <div id="artistToplist_box" class="artistToplist_box">
       <!-- 云音乐歌手榜 -->
       <div class="artistToplist_title">
         {{ artistToplist.artistToplist && artistToplist.artistToplist.name }}

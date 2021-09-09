@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { toRefs, reactive } from "vue";
+import { toRefs, reactive, onMounted } from "vue";
 import { gethotSelect, getMusic } from "@/api/index.js";
 import {useStore} from 'vuex';
 import { debounce } from "@/utils/index.js";
@@ -33,6 +33,7 @@ export default {
       //   搜索的关键词
       selectText: "",
     });
+
     // 热搜关键词
     gethotSelect().then((res) => {
       state.selectHotRender = res;
@@ -45,7 +46,7 @@ export default {
       }else {
          state.selectText = selectText
       }
-      getMusic(selectText).then((res) => {;
+      getMusic(selectText,document.getElementById("selectMusic_box")).then((res) => {;
         store.commit("Music/setSelectRender",res);
       });
     };

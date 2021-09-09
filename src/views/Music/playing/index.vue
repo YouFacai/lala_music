@@ -2,10 +2,12 @@
   <div class="playing">
     <el-table
       class="playing_L"
+      id="playing_box"
       :data="renderList"
       :height="tableHeigh"
       :border="true"
       style="width: 100%"
+      empty-text=" "
       @cell-mouse-enter="hoverenter"
       @cell-mouse-leave="hoverleave"
     >
@@ -18,12 +20,12 @@
         class-name="tableName"
         prop="name"
         label="歌曲"
-        width="430"
+        :width="tableWidth * 0.3"
       >
       </el-table-column>
-      <el-table-column prop="singerss" label="歌手" width="180">
+      <el-table-column prop="singerss" label="歌手"  :width="tableWidth * 0.25">
       </el-table-column>
-      <el-table-column prop="al.name" label="专辑" width="150">
+      <el-table-column prop="al.name" label="专辑" :width="tableWidth * 0.3">
       </el-table-column>
     </el-table>
   </div>
@@ -47,7 +49,7 @@ export default {
     });
 
     onMounted(() => {
-      playingData().then((res) => {
+      playingData(document.getElementById("playing_box")).then((res) => {
         state.renderList = res;
       });
     });
@@ -112,6 +114,7 @@ export default {
     MusicMsg: (state) => state.Music.MusicMsg,
     lyric: (state) => state.Music.lyric,
     tableHeigh: (state) => state.Common.tableHeigh,
+    tableWidth: (state) => state.Common.tableWidth,
   }),
 };
 </script>

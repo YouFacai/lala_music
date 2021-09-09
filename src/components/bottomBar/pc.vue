@@ -21,9 +21,11 @@
       <!-- 进度条 -->
       <div class="MusicMSG">
         <div class="MusicMSG_top">
-          <div  class="MusicMSG_top_name">
+          <div class="MusicMSG_top_name">
             <!-- 虽然废除了但是还是生效 -->
-            <marquee direction='right' scrolldelay='90' width='150px'>{{ MusicMsg.name || "暂无歌曲" }}</marquee>
+            <marquee direction="right" scrolldelay="90" width="150px">{{
+              MusicMsg && MusicMsg.name || "暂无歌曲"
+            }}</marquee>
           </div>
           <div class="MusicMSG_top_time">
             {{ currentTime }}/{{
@@ -64,7 +66,7 @@ import "./common.less";
 import { reactive, toRefs, ref, watch } from "vue";
 import { useStore, mapState } from "vuex";
 import { useRouter } from "vue-router";
-import { secondTO ,isEmptyObject} from "@/utils/index.js";
+import { secondTO, isEmptyObject } from "@/utils/index.js";
 import { PS } from "@/utils/index.js";
 export default {
   setup() {
@@ -80,9 +82,11 @@ export default {
     let progress_circleVoice = ref(null);
     let allMusic = store.state.Music.allMusic;
 
+
     // 上一首
     const preMusic = function () {
       store.commit("Music/updateCurrentPlay", -1);
+      // console.log(allMusic[store.state.Music.currentPlay])
       PS(allMusic[store.state.Music.currentPlay])();
     };
 
@@ -121,9 +125,6 @@ export default {
         let percent = (count / allTime) * 100;
         progress_circle.value.style.left = percent + "%";
         progress_clone.value.style.width = percent + "%";
-
-        // 判断是否播放结束
-        if (coreAudio.ended) nextMusic();
       }
     );
 

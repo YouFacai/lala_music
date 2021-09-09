@@ -1,9 +1,10 @@
 <template>
-  <div class="discuss" ref="discuss">
+  <div class="discuss"  ref="discuss" id="discuss_box">
     <!-- 精彩评论 -->
     <div class="title">精彩评论</div>
     <!-- 每一个评论 -->
-    <div class="discuss_item" v-for="data in renderList" :key="data.commentId">
+    <div >
+      <div class="discuss_item" v-for="data in renderList" :key="data.commentId">
       <div class="head_portrait">
         <img :src="data.user.avatarUrl" alt="" />
       </div>
@@ -18,6 +19,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -37,7 +39,7 @@ export default {
 
     onActivated(() => {
         // 获得评论
-      getMusicDiscuss(store.state.Music.MusicMsg.id).then((res) => {
+      getMusicDiscuss(store.state.Music.MusicMsg.id,document.getElementById("discuss_box")).then((res) => {
           res.forEach(item=>{
               item.time = convertTime(item.time)
           })

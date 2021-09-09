@@ -1,4 +1,5 @@
-import { clearsetInterval } from "@/utils/index.js";
+import { clearsetInterval, PS } from "@/utils/index.js";
+import store from '@/store/index.js';
 let timer = null;
 export const Music = {
     namespaced: true,
@@ -13,11 +14,11 @@ export const Music = {
         lyric: [],
         // 已经播放了多少秒
         currentTime: 0,
-        selectRender:[],
+        selectRender: [],
         // 当前选中的歌单Id
-        selectListID:null,
+        selectListID: null,
         // 是否显示细节
-        isData:false
+        isData: false
     }),
     mutations: {
         // 正在播放的全部歌曲
@@ -31,9 +32,8 @@ export const Music = {
                 state.currentPlay = state.currentPlay - 1;
                 if (state.currentPlay == -1) {
                     state.currentPlay = state.allMusic.length - 1
-                    console.log(state.currentPlay)
                 }
-            } else{
+            } else {
                 state.currentPlay = state.currentPlay + 1;
                 if (state.currentPlay == state.allMusic.length) {
                     state.currentPlay = 0
@@ -61,6 +61,8 @@ export const Music = {
                     state.currentTime = Math.floor(coreAudio.currentTime)
                     if (state.lyric[state.lyric.length - 1].time == state.currentTime) {
                         timer = clearsetInterval(timer)
+                        store.commit("Music/updateCurrentPlay", 1);
+                        PS(state.allMusic[store.state.Music.currentPlay])();
                     }
                 }, 1000);
             } else {
@@ -69,18 +71,18 @@ export const Music = {
         },
 
         // 存储搜索列表
-        setSelectRender(state,value){
-            state.selectRender=value
+        setSelectRender(state, value) {
+            state.selectRender = value
         },
 
         // 当前选中的歌单ID
-        setSelectListID(state,value){
-            state.selectListID=value
+        setSelectListID(state, value) {
+            state.selectListID = value
         },
 
         //  是否显示细节
-        setisData(state,value){
-            state.isData=value
+        setisData(state, value) {
+            state.isData = value
         }
     },
     actions: {},

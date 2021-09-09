@@ -7,14 +7,7 @@
 </template>
 
 <script>
-import {
-  toRefs,
-  reactive,
-  defineAsyncComponent,
-  watch,
-  ref,
-  onActivated,
-} from "vue";
+import { defineAsyncComponent, ref } from "vue";
 import { useStore, mapState } from "vuex";
 
 export default {
@@ -34,13 +27,6 @@ export default {
     const updateIsData = function (data) {
       store.commit("Music/setisData", data);
     };
-
-    /* watch(
-      () => store.state.Music.isData,
-      (oldData) => {
-        console.log(oldData);
-      }
-    ); */
 
     return {
       updateIsData,

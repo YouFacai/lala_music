@@ -1,3 +1,4 @@
+import { ElLoading } from 'element-plus'
 import instance from '@/utils/http.js'
 import store from '@/store/index.js'
 //登录
@@ -7,9 +8,16 @@ const login = function () {
 login()
 
 // 正在播放
-export const playingData = function () {
+export const playingData = function (DOM) {
     let i = 1;
+    let loadingInstance = ElLoading.service({
+        target: DOM,
+        lock: true,
+        text: '玩命加载中',
+        background: 'rgba(0, 0, 0, 0.4)'
+    })
     return instance.get("/api/recommend/songs").then((res) => {
+        loadingInstance.close()
         res.data.dailySongs.index = i++;
         res.data.dailySongs.forEach((item, index) => {
             item.singerss = "";
@@ -51,8 +59,15 @@ export const gethotSelect = function () {
 }
 
 // 搜索歌曲
-export const getMusic = function (msg) {
+export const getMusic = function (msg, DOM) {
+    let loadingInstance = ElLoading.service({
+        target: DOM,
+        lock: true,
+        text: '玩命加载中',
+        background: 'rgba(0, 0, 0, 0.4)'
+    })
     return instance.get(`/api/cloudsearch?keywords=${msg}`).then((res) => {
+        loadingInstance.close()
         if (res.result) {
             res.result.songs.forEach((item, index) => {
                 item.index = index;
@@ -70,36 +85,49 @@ export const getMusic = function (msg) {
 
 // 获得Mv url 
 export const getMvUrl = function (msg) {
-    return instance.get(`api/mv/url?id=${msg}&r=1080`).then(res=>{
+    return instance.get(`api/mv/url?id=${msg}&r=1080`).then(res => {
         return res.data
     })
 }
 
 // 获得歌曲评论
-export const getMusicDiscuss = function (id){
-    console.log(id)
-    return instance.get(`api/comment/new?type=0&id=${id}`).then(res=>{
+export const getMusicDiscuss = function (id,DOM) {
+    let loadingInstance = ElLoading.service({
+        target: DOM,
+        lock: true,
+        text: '玩命加载中',
+        background: 'rgba(0, 0, 0, 0.4)'
+    })
+    return instance.get(`api/comment/new?type=0&id=${id}`).then(res => {
+        loadingInstance.close()
         return res.data.comments
     })
 }
 
 // 获得榜单
-export const getHotlist = function(){
-    return instance.get(`/api/toplist`).then(res=>{
+export const getHotlist = function () {
+    return instance.get(`/api/toplist`).then(res => {
         return res
     })
 }
 
 // 获取热门歌单
-export const getHotsongList = function (){
-    return instance.get(`/api/top/playlist/highquality?before=1503639064232&limit=100`).then(res=>{
+export const getHotsongList = function () {
+    return instance.get(`/api/top/playlist/highquality?before=1503639064232&limit=100`).then(res => {
         return res.playlists
     })
 }
 
 // 获得歌单的详细
-export const getListDetail = function (id){
-    return instance.get(`/api/playlist/detail?id=${id}`).then(res=>{
+export const getListDetail = function (id, DOM) {
+    let loadingInstance = ElLoading.service({
+        target: DOM,
+        lock: true,
+        text: '玩命加载中',
+        background: 'rgba(0, 0, 0, 0.4)'
+    })
+    return instance.get(`/api/playlist/detail?id=${id}`).then(res => {
+        loadingInstance.close()
         res.playlist.tracks.forEach((item, index) => {
             item.singerss = "";
             item.index = index;
@@ -108,7 +136,13 @@ export const getListDetail = function (id){
             });
             item.singerss = item.singerss.slice(0, item.singerss.length - 1);
         });
-        console.log(res.playlist.tracks)
         return res.playlist.tracks
+    })
+}
+
+// 获取音乐Src
+export const getMusicSrc = function (id){
+    return instance.get(`/api/song/url?id=${id}`).then(res => {
+        return res.data[0]
     })
 }

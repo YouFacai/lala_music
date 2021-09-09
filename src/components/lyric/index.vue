@@ -1,6 +1,6 @@
 <template>
   <!-- 显示窗口 -->
-  <div class="showBox" >
+  <div class="showBox">
     <!-- 全部歌词 -->
     <div id="allLyrics" class="allLyric" ref="allLyric">
       <li
@@ -32,12 +32,13 @@ export default {
       () => store.state.Music.currentTime,
       (newdata) => {
         store.state.Music.lyric.forEach((item, index) => {
-          if (item.time == newdata) {
+          if (item.time == newdata-1) {
             let diifHeight =
               document.getElementsByClassName("common")[index - 1] &&
               document.getElementsByClassName("common")[index - 1]
                 .offsetHeight + 4;
             state.currentIndex = item.index;
+            console.log(diifHeight)
             allLyric.value.style.top =
               parseInt(window.getComputedStyle(allLyric.value)["top"]) -
               diifHeight +
@@ -47,7 +48,6 @@ export default {
       }
     );
 
-    
     return {
       ...toRefs(state),
       allLyric,
@@ -65,7 +65,7 @@ export default {
 .showBox {
   width: 90%;
   overflow: hidden;
-  margin-top: 5px;
+  // margin-top: 5px;
 
   .allLyric {
     position: relative;
@@ -74,7 +74,7 @@ export default {
     font-size: 14px;
     color: rgba(255, 255, 255, 0.6);
     transition: 0.7s;
-    top: 10px;
+    top: 70px;
 
     li {
       margin-bottom: 4px;

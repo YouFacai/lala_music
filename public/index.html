@@ -8,7 +8,7 @@
   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
   <link rel="stylesheet" href="//at.alicdn.com/t/font_2737569_ihpg4z58uae.css">
   <title>
-    <%= htmlWebpackPlugin.options.title %>
+    回来啦死鬼
   </title>
   <style>
     * {
@@ -28,3 +28,16 @@
 </body>
 
 </html>
+
+<script>
+
+  // 获取焦点
+  window.onfocus = function (){
+    document.title = '回来啦死鬼'
+  }
+
+  // 失去焦点
+  window.onblur = function (){
+    document.title = '快点回来吖死鬼！！！'
+  }
+</script>

@@ -1,4 +1,4 @@
-import { getLyric } from "@/api/index.js";
+import { getLyric,getMusicSrc } from "@/api/index.js";
 import store from '@/store/index.js'
 // 清除定时器
 export const clearsetInterval = function (timer) {
@@ -17,9 +17,11 @@ export const secondTO = function (time) {
 export const screenZoom = function (store) {
     const calculateSize = function (e) {
         // 路由高度
-        store.commit("Common/updatetableHeigh", e.currentTarget.innerHeight - 200)
+        store.commit("Common/updatetableHeigh", e.currentTarget.innerHeight - 200);
         // 歌词高度
         store.commit("Common/updatelyricHeigh", e.currentTarget.innerHeight - 395);
+        // tableWidth  列表宽度
+        store.commit("Common/updatetableWidth", Math.floor(e.currentTarget.innerWidth * 0.75));
     }
     window.addEventListener('DOMContentLoaded', calculateSize)
     window.addEventListener('resize', calculateSize)
@@ -28,11 +30,15 @@ export const screenZoom = function (store) {
 // 播放 and 切换
 export const PS = function (musicMsg) {
     return function () {
+        console.log(musicMsg)
         // 种到 vuex
         store.commit("Music/updateMusicMsg", musicMsg);
         store.commit("Music/updatecurrentTime", { type: true });
 
-        coreAudio.src = `https://music.163.com/song/media/outer/url?id=${musicMsg.id}.mp3`;
+        getMusicSrc(musicMsg.id).then(res=>{
+            coreAudio.src = res.url
+        })
+        
         // 右侧小图片改变
         smallIMG.src = musicMsg.al.picUrl;
         // 全景图片改变
@@ -43,7 +49,7 @@ export const PS = function (musicMsg) {
         });
 
         if (typeof allLyrics != "undefined") {
-            allLyrics.style.top = 0 + "px";
+            allLyrics.style.top = 70 + "px";
         }
         // 全局的节点
         let playBtn_PS = Array.from(
