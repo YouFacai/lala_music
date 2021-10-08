@@ -24,6 +24,7 @@ export const Music = {
         // 正在播放的全部歌曲
         setallMusic(state, value) {
             state.allMusic = value
+            console.log(value)
         },
 
         // 当前播放的歌曲索引
@@ -31,13 +32,16 @@ export const Music = {
             if (value == -1) {
                 state.currentPlay = state.currentPlay - 1;
                 if (state.currentPlay == -1) {
-                    state.currentPlay = state.allMusic.length - 1
+                    state.currentPlay = state.allMusic.length - 1;
+                    PS(state.allMusic[state.allMusic.length - 1])();
                 }
+                PS(state.allMusic[state.currentPlay - 1])();
             } else {
-                state.currentPlay = state.currentPlay + 1;
                 if (state.currentPlay == state.allMusic.length) {
-                    state.currentPlay = 0
+                    state.currentPlay = 0;
+                    PS(state.allMusic[0])();
                 }
+                PS(state.allMusic[state.currentPlay+1])();
             }
         },
 

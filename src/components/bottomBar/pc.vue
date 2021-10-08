@@ -67,7 +67,7 @@ import { reactive, toRefs, ref, watch } from "vue";
 import { useStore, mapState } from "vuex";
 import { useRouter } from "vue-router";
 import { secondTO, isEmptyObject } from "@/utils/index.js";
-import { PS } from "@/utils/index.js";
+// import { PS } from "@/utils/index.js";
 export default {
   setup() {
     let state = reactive({});
@@ -80,20 +80,21 @@ export default {
     let progress_clone = ref(null);
     // 声音的球
     let progress_circleVoice = ref(null);
-    let allMusic = store.state.Music.allMusic;
+    let allMusic = store.state.Music.allMusic || null;
 
 
     // 上一首
     const preMusic = function () {
-      store.commit("Music/updateCurrentPlay", -1);
-      // console.log(allMusic[store.state.Music.currentPlay])
-      PS(allMusic[store.state.Music.currentPlay])();
+      console.log(store.state.Music.currentPlay)
+      store.commit("Music/updateCurrentPlay", -1)
+     /*  
+      PS(allMusic[store.state.Music.currentPlay])(); */
     };
 
     // 下一首
     const nextMusic = function () {
       store.commit("Music/updateCurrentPlay", 1);
-      PS(allMusic[store.state.Music.currentPlay])();
+     /*  PS(allMusic[store.state.Music.currentPlay])(); */
     };
 
     const playMusic = function () {
